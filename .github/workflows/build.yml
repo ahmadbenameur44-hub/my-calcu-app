@@ -18,19 +18,28 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Setup dependencies
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Install System Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential zip unzip git libtool m4 automake openjdk-17-jdk autoconf libffi-dev python3-dev
-          pip install --upgrade pip
-          pip install "Cython==0.29.33" virtualenv buildozer
+          sudo apt-get install -y build-essential git unzip zip libtool m4 automake autoconf libffi-dev python3-dev
 
-      - name: Build with Buildozer
+      - name: Install Python Dependencies
+        run: |
+          pip install --upgrade pip setuptools virtualenv
+          pip install "Cython<3.0" buildozer
+
+      - name: Build APK with Buildozer
         run: |
           yes | buildozer android debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: package
+          name: my-apk
           path: bin/*.apk
