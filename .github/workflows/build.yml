@@ -23,7 +23,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y build-essential zip unzip git libtool m4 automake openjdk-17-jdk autoconf libffi-dev python3-dev
           pip install --upgrade pip
-          pip install buildozer cython virtualenv
+          pip install "Cython==0.29.33" virtualenv buildozer
 
       - name: Build with Buildozer
         run: |
