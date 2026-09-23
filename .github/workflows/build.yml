@@ -8,6 +8,7 @@ on:
 jobs:
   build-android:
     runs-on: ubuntu-20.04
+    timeout-minutes: 45
 
     steps:
       - name: Checkout source
@@ -36,7 +37,8 @@ jobs:
 
       - name: Build APK with Buildozer
         run: |
-          yes | buildozer android debug
+          export DEBIAN_FRONTEND=noninteractive
+          yes | buildozer -v android debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
